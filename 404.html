@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - My Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-top: 50px;
+        }
+        .message {
+            margin: 30px 0;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #0366d6;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        #loading {
+            margin-top: 30px;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Router Page</h1>
+    
+    <div id="loading">Checking URL and redirecting...</div>
+    
+    <div class="message">
+        <p>If you're not redirected automatically, please <a href="index.html" class="back-link">return to the homepage</a>.</p>
+    </div>
+
+    <script>
+        // Function to get URL parameters
+        function getUrlPath() {
+            // Get the path after the domain and project name
+            const fullPath = window.location.pathname;
+            // For GitHub Pages, the format is typically /projectname/path
+            const pathParts = fullPath.split('/');
+            // Return the last non-empty part
+            for (let i = pathParts.length - 1; i >= 0; i--) {
+                if (pathParts[i]) return pathParts[i];
+            }
+            return '';
+        }
+
+        // Function to fetch the blog routes from index.html
+        async function fetchRoutes() {
+            try {
+                // First try to access the global variable if this page was loaded from index
+                if (window.blogRoutes) {
+                    return window.blogRoutes;
+                }
+                
+                // Otherwise, fetch the index.html to extract the routes
+                const response = await fetch('index.html');
+                const html = await response.text();
+                
+                // Extract the route data using regex
+                const routeMatch = html.match(/window\.blogRoutes = (\{[^}]+\})/);
+                if (routeMatch && routeMatch[1]) {
+                    return JSON.parse(routeMatch[1].replace(/'/g, '"'));
+                }
+                
+                return {};
+            } catch (error) {
+                console.error('Error fetching routes:', error);
+                return {};
+            }
+        }
+
+        // Main function to handle routing
+        async function handleRouting() {
+            const path = getUrlPath();
+            
+            // If path is empty or index.html, no need to redirect
+            if (!path || path === 'index.html' || path === '404.html') {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Get routes
+            const routes = await fetchRoutes();
+            
+            // Check if the path matches a custom route
+            if (routes[path]) {
+                window.location.href = routes[path];
+                return;
+            }
+            
+            // Check if the path is a direct HTML file
+            if (path.endsWith('.html')) {
+                // Try to fetch the file to see if it exists
+                try {
+                    const response = await fetch(path, { method: 'HEAD' });
+                    if (response.ok) {
+                        window.location.href = path;
+                        return;
+                    }
+                } catch (error) {
+                    // File doesn't exist, continue to 404
+                }
+            }
+            
+            // If we get here, we couldn't find a match
+            document.getElementById('loading').innerHTML = 'Page not found. The URL you requested does not exist.';
+        }
+
+        // Run the routing when the page loads
+        window.addEventListener('DOMContentLoaded', handleRouting);
+    </script>
+</body>
+</html>
