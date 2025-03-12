@@ -74,7 +74,7 @@
                 <div class="blog-excerpt">
                     Learn how to quickly set up your own blog using GitHub Pages. This tutorial covers the basics of creating a repository, setting up your first pages, and customizing your site.
                 </div>
-                <a href="blog1.html" class="read-more">Read More</a>
+                <a href="blogy1" class="read-more" data-page="blog1.html">Read More</a>
             </li>
             
             <li class="blog-item">
@@ -83,7 +83,7 @@
                 <div class="blog-excerpt">
                     Discover why Markdown is the perfect format for technical bloggers. This post explores the syntax, benefits, and tools that make Markdown an excellent choice for content creation.
                 </div>
-                <a href="blog2.html" class="read-more">Read More</a>
+                <a href="markdown-guide" class="read-more" data-page="blog2.html">Read More</a>
             </li>
         </ul>
     </main>
@@ -91,5 +91,15 @@
     <footer>
         <p>&copy; 2025 My Blog. Hosted on GitHub Pages.</p>
     </footer>
+
+    <!-- URL routing map -->
+    <script>
+        // This data structure maps custom URLs to their corresponding HTML files
+        window.blogRoutes = {
+            'blogy1': 'blog1.html',
+            'markdown-guide': 'blog2.html'
+            // Add more routes as needed
+        };
+    </script>
 </body>
 </html>
