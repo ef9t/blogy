@@ -26,10 +26,25 @@
             padding: 0;
         }
         .blog-item {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             padding: 15px;
             border: 1px solid #eee;
             border-radius: 5px;
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+        .blog-thumbnail {
+            flex: 0 0 200px;
+        }
+        .blog-thumbnail img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .blog-content {
+            flex: 1;
         }
         .blog-title {
             font-size: 1.4em;
@@ -58,6 +73,14 @@
             padding-top: 20px;
             color: #777;
         }
+        @media (max-width: 600px) {
+            .blog-item {
+                flex-direction: column;
+            }
+            .blog-thumbnail {
+                flex: 0 0 auto;
+            }
+        }
     </style>
 </head>
 <body>
@@ -69,21 +92,35 @@
     <main>
         <ul class="blog-list">
             <li class="blog-item">
-                <div class="blog-title">Getting Started with GitHub Pages</div>
-                <div class="blog-date">March 12, 2025</div>
-                <div class="blog-excerpt">
-                    Learn how to quickly set up your own blog using GitHub Pages. This tutorial covers the basics of creating a repository, setting up your first pages, and customizing your site.
+                <div class="blog-thumbnail">
+                    <a href="blog1.html">
+                        <img src="images/github-pages-thumbnail.jpg" alt="GitHub Pages thumbnail">
+                    </a>
                 </div>
-                <a href="blog1.html" class="read-more">Read More</a>
+                <div class="blog-content">
+                    <div class="blog-title">Getting Started with GitHub Pages</div>
+                    <div class="blog-date">March 12, 2025</div>
+                    <div class="blog-excerpt">
+                        Learn how to quickly set up your own blog using GitHub Pages. This tutorial covers the basics of creating a repository, setting up your first pages, and customizing your site.
+                    </div>
+                    <a href="blog1.html" class="read-more">Read More</a>
+                </div>
             </li>
             
             <li class="blog-item">
-                <div class="blog-title">The Power of Markdown for Blogging</div>
-                <div class="blog-date">March 10, 2025</div>
-                <div class="blog-excerpt">
-                    Discover why Markdown is the perfect format for technical bloggers. This post explores the syntax, benefits, and tools that make Markdown an excellent choice for content creation.
+                <div class="blog-thumbnail">
+                    <a href="blog2.html">
+                        <img src="images/markdown-thumbnail.jpg" alt="Markdown thumbnail">
+                    </a>
                 </div>
-                <a href="blog2.html" class="read-more">Read More</a>
+                <div class="blog-content">
+                    <div class="blog-title">The Power of Markdown for Blogging</div>
+                    <div class="blog-date">March 10, 2025</div>
+                    <div class="blog-excerpt">
+                        Discover why Markdown is the perfect format for technical bloggers. This post explores the syntax, benefits, and tools that make Markdown an excellent choice for content creation.
+                    </div>
+                    <a href="blog2.html" class="read-more">Read More</a>
+                </div>
             </li>
         </ul>
     </main>
